@@ -76,7 +76,7 @@ int max(int x, int y)
 node_arbre* create_tree(int cle, node_arbre* arbre_gauche, node_arbre* arbre_droite)
 {
     node_arbre* binary_tree = (node_arbre*)malloc(sizeof(node_arbre));
-    binary_tree->clecle
+    binary_tree->cle;
     binary_tree->gauche = arbre_gauche;
     binary_tree->doite = arbre_droite;
     return binary_tree;
@@ -109,66 +109,42 @@ int depth_iterative(node_arbrenary_tree)
         {
             temp->key = remove_node_queue(queue);
             if(temp->left != NULL)
-                add_node_queue(queue, temp->left->key);
+                add_node_queue(file, temp->gauche->cle);
                 depth++;
-            if(temp->right != NULL)
-                add_node_queue(queue, temp->right->key);
+            if(temp->droite != NULL)
+                add_node_file(file, temp->droite->cle);
                 depth++;
-                if(temp->left != NULL && temp->right != NULL)
+                if(temp->gauche != NULL && temp->droite != NULL)
                     depth--;
         }
     }
     return depth;
 }
-//Calculating thed diameter of the tree
-int diameter_recursive(t_node_tree* binary_tree)
+
+int diameter_recursive(node_arbre* binary_tree)
 {
     if(binary_tree == NULL)
         return 0;
-    int depth_right = depth_recursive(binary_tree->right);
-    int depth_left = depth_recursive(binary_tree->left);
-    int diameter_right = diameter_recursive(binary_tree->right);
-    int diameter_left = diameter_recursive(binary_tree->left);
+    int depth_right = depth_recursive(binary_tree->droite);
+    int depth_left = depth_recursive(binary_tree->gauche);
+    int diameter_right = diameter_recursive(binary_tree->droite);
+    int diameter_left = diameter_recursive(binary_tree->gauche);
     return max(depth_right + depth_left + 1, max(diameter_right, diameter_left));
 }
-//Calculate the sum of the leaves values (recursive)
-int leaf_sum(t_node_tree* binary_tree, int sum)
+
+int leaf_sum(node_arbre* binary_tree, int sum)
 {
     if(binary_tree == NULL)
         return 0;
-    if(binary_tree->left == NULL && binary_tree->right == NULL)
+    if(binary_tree->gauche == NULL && binary_tree->droite == NULL)
     {
-        sum = binary_tree->key;
+        sum = binary_tree->cle;
         return sum;
     }
     int left_leafsum = leaf_sum(binary_tree->left, sum);
     int right_leafsum = leaf_sum(binary_tree->right, sum);
     return left_leafsum + right_leafsum;
 }
-
-/*int leaf_sum(t_node_tree* binary_tree)
-{
-    int sum = 0;
-    if(binary_tree == NULL)
-        return 0;
-    queue* tmp_q = NULL;
-    t_node_tree* temp = binary_tree;
-    tmp_q = add_node_queue(tmp_q, temp->key);
-    while(tmp_q != NULL)
-    {
-        temp->key = remove_node_queue(tmp_q);
-        if(temp->left != NULL)
-            tmp_q = add_node_queue(tmp_q, temp->left->key);
-        else
-            sum += temp->left->key;
-        if(temp->right != NULL)
-            tmp_q = add_node_queue(tmp_q, temp->right->key);
-        else
-            sum += temp->right->key;
-    }
-    return sum;
-}*/
-//menu
 void menu()
 {
     printf("---Binary Tree Demonstration ---\n\n");
@@ -182,11 +158,11 @@ int main()
 {
     int choice = 0;
     int k = 0;
-    t_node_tree* left_binary_tree = NULL;
-    t_node_tree* right_binary_tree = NULL;
+    node_arbre* left_binary_tree = NULL;
+    node_arbre* right_binary_tree = NULL;
     left_binary_tree = create_tree(1,NULL,NULL);
     right_binary_tree = create_tree(2, NULL, NULL);
-    t_node_tree* binary_tree = create_tree(3, left_binary_tree, right_binary_tree);
+    node_arbre* binary_tree = create_tree(3, left_binary_tree, right_binary_tree);
     while(1)
     {
         printf("Enter a command(0-4) and 4 to quit: ");
