@@ -1,49 +1,47 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct s_node
+struct node
 {
     int data;
-    struct s_node* next;
-    struct s_node* previous;
+    struct node* next;
+    struct node* previous;
 };
-typedef struct s_node t_node;
+typedef struct node node;
 
-struct queue
+struct file
 {
-    t_node* head;
+    t_node* tete;
     t_node* tail;
 };
-typedef struct queue queue;
+typedef struct file file;
 
-//Check if the queue is empty or not
-int empty(queue queue)
+int empty(file file)
 {
-    if(queue.head == NULL && queue.tail == NULL)
+    if(file.tete == NULL && file.tail == NULL)
         return 1;
     return 0;
 }
 
-//Add a new node the queue
-queue* add_node_queue(queue* queue, int data)
+file* add_node_queue(file* file, int data)
 {
-    t_node* new_node = (t_node*)malloc(sizeof(t_node));
-    new_node->data = data;
-    new_node->next = NULL;
-    if(empty(*queue) == 0)
+    node* nouveau_node = (node*)malloc(sizeof(node));
+    npuveau_node->data = data;
+    nouveau_node->next = NULL;
+    if(empty(*file) == 0)
     {
-        queue->tail->next = new_node;
-        queue->tail = new_node;
-        return queue;
+        file->tail->next = nouveau_node;
+        file->tail = nouveau_node;
+        return file;
     }
     else
     {
-        queue->head = queue->tail = new_node;
+        file->tete = file->tail = nouveau_node;
         return queue;
     } 
 }
 
-//Get the last element of the queue
+
 int get_last_element(queue* queue)
 {
     return queue->tail->data;
@@ -51,13 +49,12 @@ int get_last_element(queue* queue)
 
 int readchar(){return getchar();}
 
-//Tasks interval function
-int tasks_interval(int n)
+int tasks_interval(int m)
 {
-    queue* queue = NULL;
-    int res = 0;
+    file* file = NULL;
+    int resultat = 0;
     char string = readchar();
-    queue = add_node_queue(queue, string);
+    file = add_node_queue(file, string);
     while(1)
     {
         char string = readchar();
@@ -65,19 +62,19 @@ int tasks_interval(int n)
             break;
         else
         {
-            int k = get_last_element(queue);
-            if(k == string)
-                res += n;
+            int z = get_last_element(queue);
+            if(z == string)
+                resultat += m;
             else
-                res += 1;
-            queue = add_node_queue(queue, string);
+                resultat += 1;
+            file = add_node_queue(file, string);
         }
     }
-    return res;
+    return resultat;
 }
 int main()
 {
-    int res = tasks_interval(2);
-    printf("Output: %d\n\n\n", res);
+    int resultat = tasks_interval(2);
+    printf("Output: %d\n\n\n", resultat);
     return 0;
 }
