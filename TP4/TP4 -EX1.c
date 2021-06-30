@@ -1,65 +1,65 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct s_node
+struct node
 {
     int data;
-    struct s_node* next;
-    struct s_node* previous;
+    struct node* next;
+    struct node* previous;
 };
-typedef struct s_node t_node;
+typedef struct node node;
 
-struct queue
+struct file
 {
-    t_node* head;
-    t_node* tail;
+    node* tete;
+    node* tail;
 };
-typedef struct queue queue;
+typedef struct file file;
 
-struct s_node_tree 
+struct node_arbre 
 {
-    int key;
-    struct s_node_tree* right;
-    struct s_node_tree* left;
+    int cle;
+    struct node_arbre* droite;
+    struct node_arbre* gauche;
 };
-typedef struct s_node_tree t_node_tree;
-//Check if the queue is empty or not
-int empty(queue queue)
+typedef struct node_arbre node_arbre;
+
+int empty(file file)
 {
-    if(queue.head == NULL && queue.tail == NULL)
+    if(file.tete == NULL && file.tail == NULL)
         return 1;
     return 0;
 }
-//Put on an element into the queue
-queue* add_node_queue(queue* queue, int data)
+
+file* add_node_queue(file* file, int data)
 {
-    t_node* new_node = (t_node*)malloc(sizeof(t_node));
-    new_node->data = data;
-    new_node->next = NULL;
-    if(empty(*queue) == 0)
+    node* nouveau_node = (node*)malloc(sizeof(node));
+    nouveau_node->data = data;
+    nouveau_node->next = NULL;
+    if(empty(*file) == 0)
     {
         printf("TEST\n");
-        queue->tail->next = new_node;
-        queue->tail = new_node;
-        return queue;
+        file->tail->next = nouveau_node;
+        file->tail = nouveau_node;
+        return file;
     }
     else
     {
-        queue->head = queue->tail = new_node;
-        return queue;
+        file->tete = file->tail = nouveau_node;
+        return file;
     } 
 }
-//Put out an elemnt from the queue (the first one) and return its value
-int remove_node_queue(queue* queue)
+
+int remove_node_queue(file* file)
 {
-    if(queue->head != NULL)
+    if(file->tete != NULL)
     {
-        int value = 0;
-        value = queue->head->data;
-        t_node* temp = queue->head;
-        queue->head = temp->next;
+        int valeur = 0;
+        valeur = file->tete->data;
+        node* temp = file->tete;
+        file->tete = temp->next;
         free(temp);
-        return value;
+        return valeur;
     }
     else    
         exit(EXIT_FAILURE); 
@@ -72,40 +72,40 @@ int max(int x, int y)
     else    
         return y;
 }
-//Create a binary tree
-t_node_tree* create_tree(int key, t_node_tree* left_tree, t_node_tree* right_tree)
+
+node_arbre* create_tree(int cle, node_arbre* arbre_gauche, node_arbre* arbre_droite)
 {
-    t_node_tree* binary_tree = (t_node_tree*)malloc(sizeof(t_node_tree));
-    binary_tree->key = key;
-    binary_tree->left = left_tree;
-    binary_tree->right = right_tree;
+    node_arbre* binary_tree = (node_arbre*)malloc(sizeof(node_arbre));
+    binary_tree->clecle
+    binary_tree->gauche = arbre_gauche;
+    binary_tree->doite = arbre_droite;
     return binary_tree;
 }
-//Calculate the depth of the tree recursively
-int depth_recursive(t_node_tree* binary_tree)
+
+int depth_recursive(node_arbrenary_tree)
 {
     if(binary_tree == NULL)
         return 0;
     else
     {
-        int depth_right = depth_recursive(binary_tree->right);
-        int depth_left = depth_recursive(binary_tree->left);
+        int depth_right = depth_recursive(binary_tree->droite);
+        int depth_left = depth_recursive(binary_tree->gauche);
         if(depth_right > depth_left)
             return depth_right + 1;
         else    
             return depth_left + 1;
     }
 }
-//Calculate the depth of the tree using the breadth-first-search (BFS) 
-int depth_iterative(t_node_tree* binary_tree)
+
+int depth_iterative(node_arbrenary_tree)
 {
     int depth = 0;
     if(binary_tree != NULL)
     {
-        queue* queue = NULL;
-        t_node_tree* temp = binary_tree;
-        add_node_queue(queue, temp->key); 
-        while(queue != NULL)
+        file* file = NULL;
+        node_arbre* temp = binary_tree;
+        add_node_queue(file, temp->cle);
+        while(file != NULL)
         {
             temp->key = remove_node_queue(queue);
             if(temp->left != NULL)
