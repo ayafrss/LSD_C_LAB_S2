@@ -2,55 +2,54 @@
 #include <stdlib.h>
 #include <limits.h>
 
-struct s_node
+struct node
 {
     int data;
-    struct s_node* next;
+    struct node* next;
 };
-typedef struct s_node t_node;
-void initi_stack(t_node* head)
+typedef struct node node;
+void initi_stack(node* tete)
 {
-    head = NULL;
+    tete = NULL;
 }
 
 int readchar(){return getchar();}
 
-//Push an element into the stack
-t_node* push(t_node* head, int data)
+node* push(node* tete, int data)
 {
-    t_node* new_node = (t_node*)malloc(sizeof(new_node));
-    new_node->data = data;
-    new_node->next = head;
-    head = new_node;
-    return head;
+    node* nouveau_node = (node*)malloc(sizeof(nouveau_node));
+    nouveau_node->data = data;
+    nouveau_node->next = tete;
+    tete = nouveau_node;
+    return tete;
 }
-//Pop an element from the satck
-int pop(t_node* head)
+
+int pop(node* tete)
 {
-    if(head == NULL)
+    if(tete == NULL)
         return INT_MIN;
-    t_node* temp = head;
-    head = head->next;
-    int element = head->data;
+    node* temp = tete;
+    tete = tete->next;
+    int element = tete->data;
     free(temp);
     return element;
 }
-//Return the top element in the stack
-int peek_stack(t_node* head)
+
+int peek_stack(node* tete)
 {
-    if(head == NULL)
+    if(tete == NULL)
         return INT_MIN;
-    int element = head->data;
+    int element = tete->data;
     return element;
 }
-//Display the stack content
-void display(t_node* head)
+
+void display(node* tete)
 {
-    if(head == NULL)
+    if(tete == NULL)
     {
         return;
     }
-    t_node* temp = head;
+    node* temp = tete;
     printf("Stack : ");
     while(temp != NULL)
     {
@@ -59,34 +58,34 @@ void display(t_node* head)
     }
     printf("\n");
 }
-//return 1 if the stack is empty
-int empty(t_node* head)
+
+int empty(node* tete)
 {
-    return  head == NULL ? 1 : 0;
+    return  tete == NULL ? 1 : 0;
 }
 int main()
 {
-    t_node* head = NULL;
-    int res = 0;
+    node* tete = NULL;
+    int resultat = 0;
     while(1)
     {
         char string = readchar();
         if(string > '0')
-            head = push(head, string);
+            tete = push(tete, string);
         if(string == '+')
         {
-            int arg1 = pop(head);
-            int arg2 = pop(head);
-            res = arg1 + arg2;
-            head = push(head, res);
+            int arg1 = pop(tete);
+            int arg2 = pop(tete);
+            resultat = arg1 + arg2;
+            tete = push(tete, resultat);
 
         }
         if(string == '*')
         {
-            int arg1 = pop(head);
-            int arg2 = pop(head);
-            res = arg2 * arg1;
-            head = push(head, res);
+            int arg1 = pop(tete);
+            int arg2 = pop(tete);
+            resultat = arg2 * arg1;
+            tete = push(tete, res);
         }
         if(string == '-')
         {
@@ -97,23 +96,23 @@ int main()
         }
         if(string == '/')
         {
-            int arg1 = pop(head);
-            int arg2 = pop(head);
-            res = arg2 / arg1;
-            head = push(head, res);
+            int arg1 = pop(tete);
+            int arg2 = pop(tete);
+            resultat = arg2 / arg1;
+            tete = push(tete, res);
         }
         if(string == '%')
         {
-            int arg1 = pop(head);
-            int arg2 = pop(head);
-            res = arg2 % arg1;
-            head = push(head, res);
+            int arg1 = pop(tete);
+            int arg2 = pop(tete);
+            resultat = arg2 % arg1;
+            tete = push(tete, resultat);
         }
         if(string == '\n')
             break;
     }
-    res = peek_stack(head);
-    printf("The result is %d\n\n", res);
+    res = peek_stack(tete);
+    printf("The result is %d\n\n", resultat);
 
     return 0;
 }
