@@ -2,56 +2,56 @@
 #include <stdio.h>
 #include <limits.h>
 
-struct s_node
+struct node
 {
     int data;
-    struct s_node* next;
+    struct node* next;
 };
-typedef struct s_node t_node;
-void initi_stack(t_node* head)
+typedef struct node node;
+void initi_stack(node* tete)
 {
-    head = NULL;
+    tete = NULL;
 }
-//Push an element into the stack
-t_node* push(t_node* head, int data)
+
+node* push(node* tete, int data)
 {
-    t_node* new_node = (t_node*)malloc(sizeof(new_node));
-    if(new_node == NULL)
+    node* nouveau_node = (node*)malloc(sizeof(nouveau_node));
+    if(nouveau_node == NULL)
     {
         exit(0);
     }
-    new_node->data = data;
-    new_node->next = head;
-    head = new_node;
-    return head;
+    nouveau_node->data = data;
+    nouveau_node->next = tete;
+    tete = nouveau_node;
+    return tete;
 }
-//Pop an element from the satck
-int pop(t_node* head)
+
+int pop(node* tete)
 {
-    if(head == NULL)
+    if(tete == NULL)
         return INT_MIN;
-    t_node* temp = head;
-    head = head->next;
-    int element = head->data;
+    node* temp = tete;
+    tete = tete->next;
+    int element = tete->data;
     free(temp);
     return element;
 }
-//Return the top elemnt in the stack
-int peek_stack(t_node* head)
+
+int peek_stack(node* tete)
 {
-    if(head == NULL)
+    if(tete == NULL)
         return INT_MIN;
-    int element = head->data;
+    int element = tete->data;
     return element;
 }
-//Display the stack content
-void display(t_node* head)
+
+void display(node* tete)
 {
-    if(head == NULL)
+    if(tete == NULL)
     {
         return;
     }
-    t_node* temp = head;
+    node* temp = tete;
     printf("Stack : ");
     while(temp != NULL)
     {
@@ -60,18 +60,18 @@ void display(t_node* head)
     }
     printf("\n");
 }
-//return 1 if the stack is empty
-int empty(t_node* head)
+
+int empty(node* tete)
 {
-    return  head == NULL ? 1 : 0;
+    return  tete == NULL ? 1 : 0;
 }
 int main()
 {
-    t_node* head = NULL;
+    node* tete = NULL;
     int n_elements = 0;
     int element = 0;
     int counter = 0;
-    initi_stack(head);
+    initi_stack(tete);
     printf("Enter the the number of elements of the linked stack: ");
     scanf("%d", &n_elements);
     printf("---Push elements into the stack---\n");
@@ -79,13 +79,12 @@ int main()
     {
         printf("Enter a number to push into the linked stack :");
         scanf("%d", &element);
-        head = push(head, element);
-        display(head);
+        tete = push(tete, element);
+        display(tete);
         counter++;
     }
     printf("---Pop the top element from the linked stack---");
-    element = pop(head);
-    //display(head);
+    element = pop(tete);
     return 0;
 }
 
