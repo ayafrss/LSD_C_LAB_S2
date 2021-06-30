@@ -1,26 +1,25 @@
+#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 
-struct s_node
+struct node
 {
     int data;
-    struct s_node *next;
+    struct node *next;
 };
-typedef struct s_node t_node;
+typedef struct node node;
 
-//create a new node
-t_node* create(int data)
+node* create(int data)
 {
-    t_node* new_node = (t_node*)malloc(sizeof(t_node));
-    new_node->data = data;
-    new_node->next = NULL;
-    return new_node;
+    node* nouveau_node = (node*)malloc(sizeof(node));
+    nouveau_node->data = data;
+    nouveau_node->next = NULL;
+    return nouveau_node;
 }
-//Display the whole linked list
-void display_list(t_node* head)
+
+void display_list(node* tete)
 {
-    t_node* temp = head;
+    node* temp = tete;
     while(temp != NULL)
     {
         printf("%d  ", temp->data);
@@ -28,29 +27,29 @@ void display_list(t_node* head)
     }
     printf("%d  \n\n", temp->data);
 }
-//Add a new node at the end of the linked
-t_node* append(t_node* head, int data)
+
+node* append(node* tete, int data)
 {
-    t_node* temp = head;
+    node* temp = tete;
     if(head == NULL)
         return create(data);
     while(temp->next != NULL)
         temp = temp->next;
-    t_node* new_node = create(data);
-    temp->next = new_node;
-    return head;
+    node* nouveau_node = create(data);
+    temp->next = nouveau_node;
+    return tete;
 }
-//Sort a linked list using insertion sort 
-t_node* sort_list(t_node* head)
+ 
+node* sort_list(node* tete)
 {
-    t_node* x, *y, *z;
-    x = head;
+    node* x, *y, *z;
+    x = tete;
     y = x->next;
-    if(head == NULL)
+    if(tete == NULL)
         return NULL;
     while(y != NULL)
     {
-        x = head;
+        x = tete;
         while(x->next != y)
         {
             if(y->data < x->data)
@@ -67,96 +66,95 @@ t_node* sort_list(t_node* head)
             }
         }   
     }
-    return head;
+    return tete;
 }
-//Create a list with random values
-t_node* create_random(t_node* head, int k)
+
+node* create_random(node* tete, int k)
 {
     for(int i = 0; i<k; i++)
     {
         int l = rand()%k;
-        t_node* new_node = create(l);
-        head = append(head, l);
+        node* nouveau_node = create(l);
+        tete = append(tete, l);
     }
     return head;
 }
-//Count the elements of the linked list
-int count(t_node* head)
+
+int count(node* tete)
 {
-    t_node* temp = head;
-    int c = 0;
+    node* temp = tete;
+    int k = 0;
     while(temp != NULL)
     {
         c++;
         temp = temp->next;
     }
-    return c;
+    return k;
 }
-//Merge the two linked list to one sorted list
-t_node* merge_list(t_node* head_1, t_node* head_2)
+
+node* merge_list(node* tete_1, node* tete_2)
 {
-    t_node* res = NULL;
-    if(head_1 == NULL)
-        return head_2;
-    else if(head_2 == NULL)
-        return head_1;
-    if(head_1->data <= head_2->data)
+    node* resultat = NULL;
+    if(tete_1 == NULL)
+        return tete_2;
+    else if(tete_2 == NULL)
+        return tete_1;
+    if(tete_1->data <= tete_2->data)
     {
-        res->data = head_1->data;
-        res->next = merge_list(head_1->next, head_2);
+        resultat->data = tete_1->data;
+        resultat->next = merge_list(tete_1->next, tete_2);
     }
-    if(head_1->data >= head_2->data)
+    if(tete_1->data >= tete_2->data)
     {
-        res->data = head_2->data;
-        res->next = merge_list(head_1, head_2->next);
+        resultat->data = tete_2->data;
+        resultat->next = merge_list(tete_1, tete_2->next);
     }
-    return res;
+    return resultat;
 }
-//Delete a node from the middle of the linked list
-t_node* remove_middle(t_node* head, t_node* node)
+
+node* remove_middle(node* tete, node* node)
 {
-    t_node* temp = head;
-    t_node* temp_1 = NULL;
+    node* temp = tete;
+    node* temp_1 = NULL;
     while(temp != node)
     {
         temp_1 = temp;
         temp = temp->next;
     }
     temp_1->next = temp->next;
-    //temp->next = NULL;
     free(temp);
     return head;
 }
-//Remove duplicated values from the sorted linked list
-t_node* remove_duplicated(t_node* head)
+
+node* remove_duplicated(node* tete)
 {
-    t_node* temp = head;
+    node* temp = tete;
     while(temp != NULL)
     {
-        t_node* temp_1 = temp->next;
+        node* temp_1 = temp->next;
         if(temp->data == temp->next->data)
         {
-            head = remove_middle(head, temp_1);
+            tete = remove_middle(tete, temp_1);
 
         }
         temp = temp->next;
     }
-    return head;
+    return tete;
 }
 int main()
 {
     srand (time(NULL));
-    t_node* head_1 = NULL;
-    head_1 = create_random(head_1, 5);
-    t_node* head_2 = NULL;
-    head_2 = create_random(head_2, 10);
-    display_list(head_1);
-    display_list(head_2);
-    head_1 = sort_list(head_1);
-    head_2 = sort_list(head_2);
-    t_node* head = merge_list(head_1, head_2);
-    display_list(head);
-    head = remove_duplicated(head);
-    display_list(head);
+    node* tete_1 = NULL;
+    tete_1 = create_random(tete_1, 5);
+    node* tete_2 = NULL;
+    tete_2 = create_random(tete_2, 10);
+    display_list(tete_1);
+    display_list(tete_2);
+    tete_1 = sort_list(tete_1);
+    tete_2 = sort_list(tete_2);
+    node* head = merge_list(tete_1, tete_2);
+    display_list(tete);
+    tete = remove_duplicated(tete);
+    display_list(tete);
     return 0;
 }
