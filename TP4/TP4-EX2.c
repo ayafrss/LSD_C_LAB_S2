@@ -1,30 +1,30 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-struct s_node
+struct node
 {
     int key;
-    struct s_node* right;
-    struct s_node* left;
+    struct node* right;
+    struct node* left;
 };
-typedef struct s_node t_node;
+typedef struct node node;
 
-//Insert an element into the binary search tree (Iterative)
-t_node* create_node(int key)
+
+node* create_node(int key)
 {
-    t_node* new_node = (t_node*)malloc(sizeof(t_node));
-    new_node->key = key;
-    new_node->left = NULL;
-    new_node->right = NULL;
-    return new_node;
+    node* nouveau_node = (node*)malloc(sizeof(node));
+    nouveau_node->key = key;
+    nouveau_node->left = NULL;
+    nouveau_node->right = NULL;
+    return nouveau_node;
 }
-t_node* insert(t_node* binaryS_tree, int key)
+node* insert(node* binaryS_tree, int key)
 {
     if(binaryS_tree == NULL)
         return create_node(key);
-    t_node* new_node = create_node(key);
-    t_node* temp = binaryS_tree;
-    t_node* temp_1 = NULL;
+    node* new_node = create_node(key);
+    node* temp = binaryS_tree;
+    node* temp_1 = NULL;
     while(temp != NULL)
     {
         if(temp->key > key)
@@ -41,15 +41,15 @@ t_node* insert(t_node* binaryS_tree, int key)
             return NULL;
     }
     if(temp_1->key > key)
-        temp_1->left = new_node;
+        temp_1->left = nouveau_node;
     if(temp_1->key < key)
-        temp_1->right = new_node;
+        temp_1->right = nouveau_node;
     return temp_1;
 }
-//Search an element into the binary search tree (recursive)
-t_node* search(t_node* binaryS_tree, int key)
+
+node* search(node* binaryS_tree, int key)
 {
-    t_node* temp = NULL;
+    node* temp = NULL;
     if(binaryS_tree == NULL)
         exit(EXIT_FAILURE);
     if(binaryS_tree->key > key)
@@ -57,8 +57,8 @@ t_node* search(t_node* binaryS_tree, int key)
     else
         return search(binaryS_tree->right, key);
 }
-//Print the maximum depth of the tree (recursive)
-int max_depth(t_node* binary_tree)
+
+int max_depth(node* binary_tree)
 {
     if(binary_tree == NULL)
         return 0;
@@ -80,8 +80,8 @@ int max_depth(t_node* binary_tree)
         }
     }
 }
-//Print the number of elements in the tree (recursive)
-int n_elem(t_node* binaryS_tree)
+
+int n_elem(node* binaryS_tree)
 {
     int k = 1;
     if(binaryS_tree == NULL)
@@ -89,7 +89,7 @@ int n_elem(t_node* binaryS_tree)
     k += n_elem(binaryS_tree->left) + n_elem(binaryS_tree->right);
     return k + 1;
 }
-//menu
+
 void menu()
 {
     printf("---Binary Search Tree Demonstration ---\n\n");
@@ -104,8 +104,8 @@ int main()
 {
     int choice = 0;
     int k = 0;
-    t_node* binaryS_tree = NULL;
-    t_node* temp = NULL;
+    node* binaryS_tree = NULL;
+    node* temp = NULL;
     binaryS_tree = insert(binaryS_tree, 0);
     binaryS_tree = insert(binaryS_tree, 1);
     binaryS_tree = insert(binaryS_tree, 3);
