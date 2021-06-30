@@ -77,15 +77,15 @@ int palindrome_check_opt(char string[])
 int main(int argc, char* argv[])
 {
     if(argc < 2)
-        printf("No argument passed through the command line.\n"); 
+            printf("ERROR FAILURE!.\n"); 
     else
     {
-        printf("The string argument is: %s\n", argv[1]); 
+        printf("The input is: %s\n", argv[1]); 
         int l = palindrome_check_opt(argv[1]);
         if(palindrome_check_opt(argv[1]) == 0)
-            printf("The string you entered is a palindrome.\n ");
+            printf("This is a palindrome.\n ");
         else
-            printf("The string you entered is not a palindrome.\n");
+            printf("This is not a palindrome.\n");
     }
     return 0;
 }
