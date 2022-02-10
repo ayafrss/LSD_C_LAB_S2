@@ -46,7 +46,6 @@ void    *matrix_stor(int row, int col)
 {
     int    **Matrix;
     
-    printf("Here;\n");
     Matrix = malloc(sizeof(int*) * row);
     for (int i = 0 ; i < row ; i++)
         Matrix[i] = malloc(sizeof(int) * col);
@@ -54,7 +53,7 @@ void    *matrix_stor(int row, int col)
     {
         for (int j = 0 ; j < col ; j++)
         {
-            printf("Enter Elem\n");
+        
             scanf("%d", &Matrix[i][j]);
         }
     }
